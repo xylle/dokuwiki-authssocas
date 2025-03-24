@@ -197,7 +197,7 @@ class auth_plugin_authssocas extends AuthPlugin
         if (phpCAS::isAuthenticated() or ($this->getOption('autologin') and phpCAS::checkAuthentication())) {
 
             $USERINFO = $this->cas_user_attributes(phpCAS::getAttributes());
-            $this->auth_log($USERINFO['uid']);
+            $this->auth_log($USERINFO);
             $_SESSION[DOKU_COOKIE]['auth']['user'] = $USERINFO['uid'];
             $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
             $_SERVER['REMOTE_USER'] = $USERINFO['uid'];
@@ -228,18 +228,18 @@ class auth_plugin_authssocas extends AuthPlugin
      *
      * Log user connection if the log file is defined
      *
-     * format : DATE|TIME|USER
+     * format : DATE|TIME|USER|USERINFO
      *
-     * @param $user
+     * @param $userinfo (dict)
      * @return void
      */
-    private function auth_log($user): void
+    private function auth_log($userinfo): void
     {
         if (!is_null($this->logfileuser)) {
 
             $date = (new DateTime('now'))->format('Ymd|H:i:s');
 
-            $userline = $date . "|" . $user . PHP_EOL;
+            $userline = $date . "|" . $userinfo['uid'] . '|' . json_encode($userinfo) . PHP_EOL;
             if (!io_saveFile($this->logfileuser, $userline, true)) {
                 msg($this->getLang('writefail'), -1);
             }
