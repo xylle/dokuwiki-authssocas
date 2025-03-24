@@ -15,6 +15,7 @@ $lang['handlelogoutrequestTrustedHosts'] = 'Hôtes de confiance pour les demande
 $lang['autologin'] = 'Connexion automatique';
 
 $lang['group_attribut'] = 'Attribut CAS contenant la liste des groupes de l\'utilisateurs.';
+$lang['group_attribut_separator'] = 'Par défaut, l\'attribut du groupe est sensé être un tableau. Si l\'attribut est une chaîne contenant tous les groupes, donnez ici le séparateur des groupes (par ex. virgule, point-virgule, ...)';
 $lang['name_attribut'] = 'Attribut CAS contenant le nom de l\'utilisateur.';
 $lang['mail_attribut'] = 'Attribut CAS contenant le courriel de l\'utilisateur.';
 $lang['uid_attribut'] = 'Attribut CAS contenant l\'identifiant de l\'utilisateur.';

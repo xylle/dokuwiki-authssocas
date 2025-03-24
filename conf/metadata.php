@@ -16,6 +16,7 @@ $meta['handlelogoutrequestTrustedHosts'] = array('string');
 $meta['autologin'] = array('onoff');
 
 $meta['group_attribut'] = array('string');
+$meta['group_attribut_separator'] = array('string');
 $meta['name_attribut'] = array('string');
 $meta['mail_attribut'] = array('string');
 $meta['uid_attribut'] = array('string');

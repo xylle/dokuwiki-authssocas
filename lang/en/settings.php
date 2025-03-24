@@ -19,6 +19,7 @@ $lang['handlelogoutrequestTrustedHosts'] = 'trusted hosts for logout requests(FQ
 $lang['autologin'] = 'login automatically';
 
 $lang['group_attribut'] = 'CAS attribute containing list of user groups.';
+$lang['group_attribut_separator'] = 'By default, the groupe attribute is supposed to be an array. If the attribute is a string containing all the groups, specify here the group separator (i.e. comma, colum, semicolon, ...)';
 $lang['name_attribut'] = 'CAS attribute containing user name';
 $lang['mail_attribut'] = 'CAS attribute containing user mail';
 $lang['uid_attribut'] = 'CAS attribute containing user uid';
