@@ -7,6 +7,7 @@ $lang['port'] = 'CAS server port (443)';
 $lang['rootcas'] = 'CAS server uri (/cas)';
 
 $lang['logfileuser'] = 'Log file name. If defined, log connections. The file is located in the logs folder. Time is in UTC';
+$lang['http_header_real_ip'] = 'HTTP header with the real client\'s IP address. Use this if dokuwiki instance is reverse proxy-fied';
 
 $lang['samlValidate'] = '??';
 
@@ -18,6 +19,7 @@ $lang['handlelogoutrequestTrustedHosts'] = 'trusted hosts for logout requests(FQ
 $lang['autologin'] = 'login automatically';
 
 $lang['group_attribut'] = 'CAS attribute containing list of user groups.';
+$lang['group_attribut_separator'] = 'By default, the groupe attribute is supposed to be an array. If the attribute is a string containing all the groups, specify here the group separator (i.e. comma, colum, semicolon, ...)';
 $lang['name_attribut'] = 'CAS attribute containing user name';
 $lang['mail_attribut'] = 'CAS attribute containing user mail';
 $lang['uid_attribut'] = 'CAS attribute containing user uid';

@@ -10,6 +10,7 @@
  */
 
 use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Logger;
 
 
 class auth_plugin_authssocas extends AuthPlugin
@@ -59,6 +60,7 @@ class auth_plugin_authssocas extends AuthPlugin
         // Chargement des options
         $this->options['debug'] = $this->getConf('debug');
         $this->options['group_attribut'] = $this->getConf('group_attribut');
+        $this->options['group_attribut_separator'] = $this->getConf('group_attribut_separator');
         $this->options['handlelogoutrequest'] = $this->getConf('handlelogoutrequest');
         $this->options['handlelogoutrequestTrustedHosts'] = $this->getConf('handlelogoutrequestTrustedHosts');
         $this->options['mail_attribut'] = $this->getConf('mail_attribut');
@@ -69,6 +71,7 @@ class auth_plugin_authssocas extends AuthPlugin
         $this->options['rootcas'] = $this->getConf('rootcas');
         $this->options['uid_attribut'] = $this->getConf('uid_attribut');
         $this->options['cacert'] = $this->getConf('cacert');
+        $this->options['http_header_real_ip'] = $this->getConf('http_header_real_ip');
 
         $server_version = CAS_VERSION_2_0;
         if ($this->getOption("samlValidate")) {
@@ -197,7 +200,7 @@ class auth_plugin_authssocas extends AuthPlugin
         if (phpCAS::isAuthenticated() or ($this->getOption('autologin') and phpCAS::checkAuthentication())) {
 
             $USERINFO = $this->cas_user_attributes(phpCAS::getAttributes());
-            $this->auth_log($USERINFO['uid']);
+            $this->auth_log($USERINFO);
             $_SESSION[DOKU_COOKIE]['auth']['user'] = $USERINFO['uid'];
             $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
             $_SERVER['REMOTE_USER'] = $USERINFO['uid'];
@@ -207,6 +210,46 @@ class auth_plugin_authssocas extends AuthPlugin
         return false;
     }
 
+    /**
+     *
+     * Renvoi les groupes de l'utilisateur fournis par le CAS
+     * et s'assure que la valeur est bien de type array
+     *
+     * @param $attributes
+     * @return array
+     */
+    private function cas_user_groups($attributes): array
+    {
+        global $conf;
+
+        $raw_groups =  $attributes[$this->getOption('group_attribut')] ?: array();
+        $user_groups = array();
+
+        Logger::debug("authssocas: raw user groups '{$raw_groups}' - Group separator : '" . $this->getOption('group_attribut_separator') . "' - defaultgroup : '{$conf['defaultgroup']}'");
+
+        if (! $this->getOption('group_attribut_separator')) {
+            # WITHOUT group_attribut_separator configuration : the value returned from CAS should be an array
+            if (! is_array($raw_groups)) {
+                $user_groups = array($raw_groups);
+            } else {
+                $user_groups = $raw_groups;
+            }
+        } else {
+            # WITH group_attribut_separator configuration : the value returned from CAS should be a string
+            if (is_array($raw_groups)) {
+                $user_groups = $raw_groups;
+            } elseif (is_string($raw_groups)) {
+                $user_groups = explode($this->getOption('group_attribut_separator'), $raw_groups);
+            }
+        }
+
+        # Always add the default group (as done by other auth plugins)
+        if ($conf['defaultgroup'] && !in_array($conf['defaultgroup'], $user_groups)) {
+             array_push($user_groups, $conf['defaultgroup']);
+        }
+
+        return $user_groups;
+    }
     /**
      *
      * Renvoi les informations de l'utilisateur fournit par le CAS
@@ -220,7 +263,7 @@ class auth_plugin_authssocas extends AuthPlugin
             'uid' => $attributes[$this->getOption('uid_attribut')],
             'name' => $attributes[$this->getOption('name_attribut')],
             'mail' => $attributes[$this->getOption('mail_attribut')],
-            'grps' => $attributes[$this->getOption('group_attribut')],
+            'grps' => $this->cas_user_groups($attributes),
         );
     }
 
@@ -228,18 +271,22 @@ class auth_plugin_authssocas extends AuthPlugin
      *
      * Log user connection if the log file is defined
      *
-     * format : DATE|TIME|USER
+     * format : DATE|TIME|USER|CLIENT_IP|REAL_CLIENT_IP|USERINFO
      *
-     * @param $user
+     * @param $userinfo (dict)
      * @return void
      */
-    private function auth_log($user): void
+    private function auth_log($userinfo): void
     {
         if (!is_null($this->logfileuser)) {
 
             $date = (new DateTime('now'))->format('Ymd|H:i:s');
 
-            $userline = $date . "|" . $user . PHP_EOL;
+            $userline = $date . "|" . 
+                    $userinfo['uid'] . '|' . 
+                    $_SERVER['REMOTE_ADDR'] . '|' . 
+                    ( $this->getOption('http_header_real_ip') ? ( $_SERVER[$this->getOption('http_header_real_ip')]?: '-' ) : '-' )  . '|' .
+                    json_encode($userinfo) . PHP_EOL;
             if (!io_saveFile($this->logfileuser, $userline, true)) {
                 msg($this->getLang('writefail'), -1);
             }
