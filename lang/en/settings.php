@@ -7,6 +7,7 @@ $lang['port'] = 'CAS server port (443)';
 $lang['rootcas'] = 'CAS server uri (/cas)';
 
 $lang['logfileuser'] = 'Log file name. If defined, log connections. The file is located in the logs folder. Time is in UTC';
+$lang['http_header_real_ip'] = 'HTTP header with the real client\'s IP address. Use this if dokuwiki instance is reverse proxy-fied';
 
 $lang['samlValidate'] = '??';
 

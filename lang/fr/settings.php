@@ -6,7 +6,7 @@ $lang['server'] = 'fqdn du serveur cas (cas.example.com)';
 $lang['port'] = 'port du CAS (443)';
 $lang['rootcas'] = 'URI du service cas (/cas)';
 $lang['logfileuser'] = 'Nom du fichier journal. Si définit, enregistre les connexions des utilisateurs. Le fichier se trouve le dossier des journaux. L\'heure est en UTC';
-
+$lang['http_header_real_ip'] = 'En-tête HTTP contenant l\'adresse IP réelle du client. A utiliser si l\'instance dokuwiki est "derrière" un serveur mandataire inverse (reverse proxy)';
 
 
 $lang['handlelogoutrequest'] = 'Gérer les demandes de déconnexion du CAS';

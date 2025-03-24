@@ -69,6 +69,7 @@ class auth_plugin_authssocas extends AuthPlugin
         $this->options['rootcas'] = $this->getConf('rootcas');
         $this->options['uid_attribut'] = $this->getConf('uid_attribut');
         $this->options['cacert'] = $this->getConf('cacert');
+        $this->options['http_header_real_ip'] = $this->getConf('http_header_real_ip');
 
         $server_version = CAS_VERSION_2_0;
         if ($this->getOption("samlValidate")) {
@@ -228,7 +229,7 @@ class auth_plugin_authssocas extends AuthPlugin
      *
      * Log user connection if the log file is defined
      *
-     * format : DATE|TIME|USER|USERINFO
+     * format : DATE|TIME|USER|CLIENT_IP|REAL_CLIENT_IP|USERINFO
      *
      * @param $userinfo (dict)
      * @return void
@@ -239,7 +240,11 @@ class auth_plugin_authssocas extends AuthPlugin
 
             $date = (new DateTime('now'))->format('Ymd|H:i:s');
 
-            $userline = $date . "|" . $userinfo['uid'] . '|' . json_encode($userinfo) . PHP_EOL;
+            $userline = $date . "|" . 
+                    $userinfo['uid'] . '|' . 
+                    $_SERVER['REMOTE_ADDR'] . '|' . 
+                    ( $this->getOption('http_header_real_ip') ? ( $_SERVER[$this->getOption('http_header_real_ip')]?: '-' ) : '-' )  . '|' .
+                    json_encode($userinfo) . PHP_EOL;
             if (!io_saveFile($this->logfileuser, $userline, true)) {
                 msg($this->getLang('writefail'), -1);
             }
