@@ -243,6 +243,11 @@ class auth_plugin_authssocas extends AuthPlugin
             }
         }
 
+        # Always add the default group (as done by other auth plugins)
+        if ($conf['defaultgroup'] && !in_array($conf['defaultgroup'], $user_groups)) {
+             array_push($user_groups, $conf['defaultgroup']);
+        }
+
         return $user_groups;
     }
     /**
