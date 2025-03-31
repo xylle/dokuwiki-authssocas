@@ -1,7 +1,7 @@
 base   authssocas
 author Xylle
 email  xylle.b@kidja.tf
-date   2024-03-15
+date   2024-03-31
 name   SSO CAS Auth Plugin
 desc   Provides user authentication against a CAS server
 url    http://www.dokuwiki.org/plugin:authplaincas

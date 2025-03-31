@@ -1,24 +1,23 @@
 <?php
 $lang['name'] = 'Nom du service d\'authentification';
-$lang['logourl'] = 'URL du Logo pour le service CAS. Si https, il faut que l\'URL soit relative ou en https';
+$lang['logourl'] = 'URL du logo pour le service CAS. Si l\'URL est en HTTPS, elle doit être relative ou en HTTPS.';
 
-$lang['server'] = 'fqdn du serveur cas (cas.example.com)';
-$lang['port'] = 'port du CAS (443)';
-$lang['rootcas'] = 'URI du service cas (/cas)';
-$lang['logfileuser'] = 'Nom du fichier journal. Si définit, enregistre les connexions des utilisateurs. Le fichier se trouve le dossier des journaux. L\'heure est en UTC';
+$lang['server'] = 'FQDN du serveur CAS (ex. cas.example.com)';
+$lang['port'] = 'Port du serveur CAS (ex. 443)';
+$lang['rootcas'] = 'Chemin du service CAS (ex. /cas)';
+$lang['logfileuser'] = 'Nom du fichier journal. S\'il est défini, les connexions des utilisateurs y seront enregistrées. Le fichier est stocké dans le dossier de journaux. L\'heure est en UTC.';
+$lang['http_header_real_ip'] = 'Nom de l\'en-tête HTTP contenant l\'IP réelle du client. Utile si DokuWiki est derrière un reverse proxy.';
 
+$lang['handlelogoutrequest'] = 'Activer la gestion des demandes de déconnexion CAS (Single Logout)';
+$lang['handlelogoutrequestTrustedHosts'] = 'Hôtes de confiance pour les demandes de déconnexion (FQDN ou IP), séparés par des virgules. Une résolution DNS inverse est effectuée. Attention si vous êtes derrière un proxy inverse.';
 
+$lang['autologin'] = 'Activer la connexion automatique si l\'utilisateur est authentifié CAS';
 
-$lang['handlelogoutrequest'] = 'Gérer les demandes de déconnexion du CAS';
-$lang['handlelogoutrequestTrustedHosts'] = 'Hôtes de confiance pour les demandes de déconnexion(FQDN ou IP), séparé par des virgules. Réalise une résolution DNS inverse. Attention si vous êtes derrière un proxy inverse.';
+$lang['group_attribut'] = 'Attribut CAS contenant la liste des groupes de l\'utilisateur.';
+$lang['group_attribut_separator'] = 'Par défaut, l\'attribut de groupe doit être un tableau. Si c\'est une chaîne, indiquez ici le séparateur utilisé (ex. virgule, point-virgule, etc.).';
+$lang['name_attribut'] = 'Attribut CAS contenant le nom complet de l\'utilisateur.';
+$lang['mail_attribut'] = 'Attribut CAS contenant l\'adresse e-mail de l\'utilisateur.';
+$lang['uid_attribut'] = 'Attribut CAS contenant l\'identifiant unique (UID) de l\'utilisateur.';
 
-$lang['autologin'] = 'Connexion automatique';
-
-$lang['group_attribut'] = 'Attribut CAS contenant la liste des groupes de l\'utilisateurs.';
-$lang['name_attribut'] = 'Attribut CAS contenant le nom de l\'utilisateur.';
-$lang['mail_attribut'] = 'Attribut CAS contenant le courriel de l\'utilisateur.';
-$lang['uid_attribut'] = 'Attribut CAS contenant l\'identifiant de l\'utilisateur.';
-
-$lang['cacert'] = 'Autorité ayant validé le certificat du serveur CAS (mettre le contenu du certificat)';
-$lang['debug'] = 'Afficher les informations de débogage';
-
+$lang['cacert'] = 'Contenu du certificat de l\'autorité ayant signé le certificat du serveur CAS.';
+$lang['debug'] = 'Activer le mode débogage pour phpCAS (journalisation détaillée).';

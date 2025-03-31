@@ -1,16 +1,19 @@
 authssocas
 ===========
 
-CAS authentication for dokuwiki using cas attributes
+CAS authentication for DokuWiki using CAS attributes
 
-All documentation for this plugin can be found at
+All documentation for this plugin can be found at:
 https://www.dokuwiki.org/plugin:authssocas
 
-clone this repository as "authssocas" in the plugin directory
+Clone this repository as "authssocas" in the plugin directory.
 
-If you install this plugin manually, make sure it is installed in
-lib/plugins/pureldap/ - if the folder is called different it
-will not work!
+If you install this plugin manually, make sure it is installed in:
+lib/plugins/authssocas/
+If the folder is named differently, it will not work!
+
+⚠️ Do not install phpCAS separately — it is already included in the plugin.
+
 
 ----
 Copyright (C) Xylle <xylle409@gmail.com>
