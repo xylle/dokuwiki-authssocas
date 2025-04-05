@@ -28,3 +28,13 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 See the LICENSING file for details
+
+----
+
+## Credits
+
+- Plugin developed by **Xylle**
+- Group string support added by **xmontagut**
+- Includes the **phpCAS** library
+- Based on the **CAS (Central Authentication Service)** protocol
+- Hosted on the [DokuWiki Plugin Repository](https://www.dokuwiki.org/plugin:authssocas)
