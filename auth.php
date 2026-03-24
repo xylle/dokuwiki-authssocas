@@ -70,6 +70,7 @@ class auth_plugin_authssocas extends AuthPlugin
         $this->options['rootcas'] = $this->getConf('rootcas');
         $this->options['uid_attribut'] = $this->getConf('uid_attribut');
         $this->options['cacert'] = $this->getConf('cacert');
+        $this->options['autologin'] = $this->getConf('autologin');
 
         $server_version = CAS_VERSION_2_0;
         if ($this->getOption("samlValidate")) {
@@ -208,6 +209,11 @@ class auth_plugin_authssocas extends AuthPlugin
             $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
             $_SERVER['REMOTE_USER'] = $USERINFO['uid'];
             return true;
+        }
+
+        // If autologin is on, redirect immediately
+        if ($this->getOption('autologin')) {
+            $this->logIn();
         }
 
         return false;
