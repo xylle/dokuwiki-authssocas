@@ -83,7 +83,7 @@ class auth_plugin_authssocas extends AuthPlugin
             phpCAS::setVerbose(true);
         }
 
-        if (!DOKU_BASE == "/") {
+        if (DOKU_BASE != "/") {
             $service_base_url = str_replace(DOKU_BASE, "", DOKU_URL);
         } else {
             $service_base_url = DOKU_URL;
